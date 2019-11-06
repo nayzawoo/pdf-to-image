@@ -1,6 +1,6 @@
 # PDF to Image
 
-Simple PDF file to image(jpj/pdf) using ([libvips](https://github.com/libvips/libvips), [php-vips](https://github.com/libvips/php-vips)) for my personal projects.
+Simple PDF file to image(jpg/png) using ([libvips](https://github.com/libvips/libvips), [php-vips](https://github.com/libvips/php-vips)) for my personal projects.
 
 ## Requirements
 
@@ -28,3 +28,10 @@ $converter->saveAsImage('example/output.jpeg', [
     'page' => 1,
 ]);
 ```
+
+### Check
+
+- https://github.com/libvips/libvips
+- https://github.com/libvips/php-vips
+- https://github.com/libvips/php-vips/issues/71
+- https://github.com/spatie/pdf-to-image

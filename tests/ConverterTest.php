@@ -9,7 +9,7 @@ class ConverterTest extends TestCase
 {
     use TestHelper;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
         $this->deleteTestFiles();
@@ -21,15 +21,17 @@ class ConverterTest extends TestCase
 
         $converter = new Converter($sourcePath);
 
-        foreach (['red', 'green', 'blue', 'black'] as $i => $color) {
-            $outputPath = __DIR__.'/../storage/'.$color.'.jpg';
+        foreach (['jpg', 'jpeg', 'png'] as $imageFormat) {
+            foreach (['red', 'green', 'blue', 'black'] as $i => $color) {
+                $outputPath = __DIR__.'/../storage/'.$color.'.'.$imageFormat;
 
-            $converter->saveAsImage($outputPath, [
-                'page' => $i,
-            ]);
+                $converter->saveAsImage($outputPath, [
+                    'page' => $i,
+                ]);
 
-            $this->assertTrue(file_exists($outputPath));
-            $this->assertColor($outputPath, $color, 'Assert For Color '.$color);
+                $this->assertTrue(file_exists($outputPath));
+                $this->assertImageMainColor($outputPath, $color, 'Assert For Color '.$color);
+            }
         }
     }
 
@@ -43,25 +45,7 @@ class ConverterTest extends TestCase
         $this->assertTrue(file_exists($outputPath));
     }
 
-    public function test_pdf_pages_with_colors()
-    {
-        $sourcePath = __DIR__.'/../data/red-green-blue-black.pdf';
-
-        $converter = new Converter($sourcePath);
-
-        foreach (['red', 'green', 'blue', 'black'] as $i => $color) {
-            $outputPath = __DIR__.'/../storage/'.$color.'.png';
-
-            $converter->saveAsImage($outputPath, [
-                'page' => $i,
-            ]);
-
-            $this->assertTrue(file_exists($outputPath));
-            $this->assertColor($outputPath, $color, 'Assert for color: '.$color);
-        }
-    }
-
-    protected function tearDown(): void
+    protected function tearDown()
     {
         parent::tearDown();
         $this->deleteTestFiles();

@@ -8,7 +8,7 @@ use League\ColorExtractor\Palette;
 
 trait TestHelper
 {
-    protected function assertColor($path, $color, $prefixMessage)
+    protected function assertImageMainColor($path, $color, $prefixMessage)
     {
         $palette = Palette::fromFilename($path);
         $extractor = new ColorExtractor($palette);
@@ -17,26 +17,26 @@ trait TestHelper
 
         switch ($color) {
             case 'red':
-                $this->assertGreaterThan(250, $mainColors['r'], $prefixMessage);
-                $this->assertLessThan(5, $mainColors['g'], $prefixMessage);
-                $this->assertLessThan(5, $mainColors['b'], $prefixMessage);
+                $this->assertGreaterThan(253, $mainColors['r'], $prefixMessage);
+                $this->assertLessThan(2, $mainColors['g'], $prefixMessage);
+                $this->assertLessThan(2, $mainColors['b'], $prefixMessage);
                 break;
 
             case 'green':
-                $this->assertGreaterThan(250, $mainColors['g'], $prefixMessage);
-                $this->assertLessThan(5, $mainColors['r'], $prefixMessage);
-                $this->assertLessThan(5, $mainColors['b'], $prefixMessage);
+                $this->assertGreaterThan(253, $mainColors['g'], $prefixMessage);
+                $this->assertLessThan(2, $mainColors['r'], $prefixMessage);
+                $this->assertLessThan(2, $mainColors['b'], $prefixMessage);
                 break;
 
             case 'blue':
-                $this->assertGreaterThan(250, $mainColors['b'], $prefixMessage);
-                $this->assertLessThan(5, $mainColors['r'], $prefixMessage);
-                $this->assertLessThan(5, $mainColors['g'], $prefixMessage);
+                $this->assertGreaterThan(253, $mainColors['b'], $prefixMessage);
+                $this->assertLessThan(2, $mainColors['r'], $prefixMessage);
+                $this->assertLessThan(2, $mainColors['g'], $prefixMessage);
                 break;
             case 'black':
-                $this->assertLessThan(5, $mainColors['b'], $prefixMessage);
-                $this->assertLessThan(5, $mainColors['r'], $prefixMessage);
-                $this->assertLessThan(5, $mainColors['g'], $prefixMessage);
+                $this->assertLessThan(2, $mainColors['b'], $prefixMessage);
+                $this->assertLessThan(2, $mainColors['r'], $prefixMessage);
+                $this->assertLessThan(2, $mainColors['g'], $prefixMessage);
                 break;
         }
     }
@@ -47,6 +47,7 @@ trait TestHelper
 
         foreach ([
                      'jpg',
+                     'jpeg',
                      'png',
                  ] as $format) {
             foreach (glob($path.'*.'.$format) as $file) {
