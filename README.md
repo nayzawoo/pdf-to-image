@@ -1,5 +1,7 @@
 # PDF to Image
 
+Simple PDF file to image(jpj/pdf) using ([libvips](https://github.com/libvips/libvips), [php-vips](https://github.com/libvips/php-vips)) for my personal projects.
+
 ## Requirements
 
 - *ext-vips* [-> installation](https://github.com/libvips/php-vips-ext#installing)
