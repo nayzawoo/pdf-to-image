@@ -1,0 +1,32 @@
+{
+    "name": "nayzawoo/pdf-to-image",
+    "description": "Converter PHP PDF to JPG/PNG and other formats for my personal project",
+    "type": "library",
+    "require": {
+        "php" : "^7.0",
+        "jcupitt/vips": "^1.0@dev",
+        "ext-vips": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "^6.2",
+        "league/color-extractor": "0.3.*"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "NayZawOo\\PdfToImage\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NayZawOo\\PdfToImage\\Tests\\": "tests"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nay Zaw Oo",
+            "email": "nayzawoo.me@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
