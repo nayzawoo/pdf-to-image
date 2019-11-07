@@ -6,9 +6,6 @@ use NayZawOo\PdfToImage\Exceptions\InvalidOutputFormatException;
 
 class Converter
 {
-    const IMAGE_FORMAT_JPG = 'jpg';
-    const IMAGE_FORMAT_PNG = 'png';
-
     /**
      * @var array
      */
@@ -39,8 +36,7 @@ class Converter
      */
     public function saveAsImage($path, $options = [])
     {
-
-        $page = $options['page'] ?? 1;
+        $page = $options['page'] ?? 0;
 
         $sourceOptions = array_merge($this->sourceOptions, [
             'page' => $page,
@@ -50,32 +46,18 @@ class Converter
 
         $pdf = \Jcupitt\Vips\Image::pdfload($this->sourcePath, $sourceOptions);
 
-        $extension = $this->getExtensionsFromPath($path);
+        $extension = Utils::getExtensionsFromPath($path);
 
-        if ($extension === static::IMAGE_FORMAT_JPG) {
+        if ($extension === Constants::IMAGE_FORMAT_JPG) {
             $pdf->jpegsave($path, $options);
 
             return null;
-        } elseif ($extension === static::IMAGE_FORMAT_PNG) {
+        } elseif ($extension === Constants::IMAGE_FORMAT_PNG) {
             $pdf->pngsave($path, $options);
 
             return null;
         }
 
         throw new InvalidOutputFormatException("Invalid output image format: \"".$extension."\"");
-    }
-
-    protected function getExtensionsFromPath($path)
-    {
-        $outputExtension = pathinfo($path, PATHINFO_EXTENSION);
-        $outputExtension = strtolower($outputExtension);
-
-        switch ($outputExtension) {
-            case 'jpg':
-            case 'jpeg':
-                return static::IMAGE_FORMAT_JPG;
-            default:
-                return static::IMAGE_FORMAT_PNG;
-        }
     }
 }

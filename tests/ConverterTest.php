@@ -30,9 +30,15 @@ class ConverterTest extends TestCase
                 ]);
 
                 $this->assertTrue(file_exists($outputPath));
-                $this->assertImageMainColor($outputPath, $color, 'Assert For Color '.$color);
+                $this->assertImageMainColor($outputPath, $color, 'output image color should equal'.$color);
             }
         }
+
+        $outputPath = __DIR__.'/../storage/red.jpg';
+        $converter->saveAsImage($outputPath);
+
+        $this->assertTrue(file_exists($outputPath));
+        $this->assertImageMainColor($outputPath, 'red', 'first page output image color should equal red');
     }
 
     public function test_converter_should_create_output_file()
