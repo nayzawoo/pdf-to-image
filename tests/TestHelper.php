@@ -8,11 +8,17 @@ use League\ColorExtractor\Palette;
 
 trait TestHelper
 {
-    protected function assertImageMainColor($path, $color, $prefixMessage)
+    protected function extractColors($path, $colorCounts)
     {
         $palette = Palette::fromFilename($path);
         $extractor = new ColorExtractor($palette);
-        $mainColors = $extractor->extract(1)[0];
+
+        return $extractor->extract($colorCounts);
+    }
+
+    protected function assertImageMainColor($path, $color, $prefixMessage)
+    {
+        $mainColors = $this->extractColors($path, 1)[0];
         $mainColors = Color::fromIntToRgb($mainColors);
 
         switch ($color) {

@@ -28,9 +28,9 @@ class Utils
         switch ($outputExtension) {
             case 'jpg':
             case 'jpeg':
-                return Constants::IMAGE_FORMAT_JPG;
+                return ImageFormat::JPG;
             default:
-                return Constants::IMAGE_FORMAT_PNG;
+                return ImageFormat::PNG;
         }
     }
 }
