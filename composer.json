@@ -3,7 +3,7 @@
     "description": "Converter PDF to JPG/PNG and other formats for my personal project",
     "type": "library",
     "require": {
-        "php" : "^7.0",
+        "php" : ">=7.0.11",
         "jcupitt/vips": "^1.0@dev",
         "ext-vips": "^1.0"
     },
