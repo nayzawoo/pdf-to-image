@@ -1,6 +1,6 @@
 # PDF to Image
 
-Simple PDF to image(jpg/png) using ([libvips](https://github.com/libvips/libvips), [php-vips](https://github.com/libvips/php-vips)) for my personal projects.
+PDF to image(jpg/png) using ([libvips](https://github.com/libvips/libvips), [php-vips](https://github.com/libvips/php-vips))
 
 ## Requirements
 
