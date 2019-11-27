@@ -1,5 +1,7 @@
 # PDF to Image
 
+[![Build Status](https://travis-ci.org/nayzawoo/pdf-to-image.svg?branch=master)](https://travis-ci.org/nayzawoo/pdf-to-image)
+
 PDF to image(jpg/png) using ([libvips](https://github.com/libvips/libvips), [php-vips](https://github.com/libvips/php-vips))
 
 ## Requirements
