@@ -4,17 +4,26 @@ namespace NayZawOo\PdfToImage;
 
 class Utils
 {
-    public static function getPdfPageCount($pdfPath)
+    public static function command_exist($cmd)
+    {
+        $return = shell_exec(sprintf("which %s", escapeshellarg($cmd)));
+
+        return !empty($return);
+    }
+
+    public static function isOSx()
     {
         $os = strtolower(trim(php_uname('s')));
-        if ($os === 'darwin') {
-            $cmd = "/usr/bin/mdls -name kMDItemNumberOfPages -raw";
-            exec("{$cmd} {$pdfPath}", $output);
 
-            return (int) $output;
-        }
+        return $os === 'darwin';
+    }
 
+    public static function getPdfPageCount($pdfPath)
+    {
         $cmd = "/usr/bin/pdfinfo";
+        if (!static::command_exist($cmd)) {
+            throw new \Exception('Command not found: /usr/bin/pdfinfo. Check https://command-not-found.com/pdfinfo');
+        }
 
         exec("{$cmd} {$pdfPath}", $output);
 
