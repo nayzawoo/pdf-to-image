@@ -50,6 +50,17 @@ class PDF
         throw new InvalidOutputFormatException("Invalid output image format: \"{$extension}\"");
     }
 
+    public function getPageCount(): int
+    {
+        if (!file_exists($this->sourcePath)) {
+            throw new FileNotFoundException("No such file or directory {$this->sourcePath}");
+        }
+
+        $pdf = $this->vips->pdfload($this->sourcePath, []);
+
+        return $pdf->get('n-pages');
+    }
+
     private function getSourceOptions(array $options): array
     {
         $sourceOptions = $this->arrayOnly($options, [

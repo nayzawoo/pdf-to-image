@@ -48,6 +48,14 @@ $pdf = new PDF('source.pdf', [
 $pdf->saveAsImage('output.png');
 ```
 
+### Get Page Count
+
+Retrieve the total number of pages in the PDF file:
+
+```php
+$pageCount = $pdf->getPageCount(); // returns int (e.g. 3)
+```
+
 ---
 
 ## Options
