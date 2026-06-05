@@ -1,7 +1,7 @@
 # PDF to Image
 
 [![Tests](https://github.com/nayzawoo/pdf-to-image/actions/workflows/test.yml/badge.svg)](https://github.com/nayzawoo/pdf-to-image/actions/workflows/test.yml)
-[![License](https://img.shields.io/github/license/nayzawoo/pdf-to-image.svg)](LICENSE)
+[![License](https://img.shields.io/github/license/nayzawoo/pdf-to-image.svg?cacheSeconds=0)](LICENSE)
 
 A high-performance PHP library to convert PDF pages to JPG/PNG images using [libvips](https://github.com/libvips/libvips) via [php-vips](https://github.com/libvips/php-vips).
 
