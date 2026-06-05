@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NayZawOo\PdfToImage;
 
-class ImageFormat
+final class ImageFormat
 {
-    const JPG = 'jpg';
-    const PNG = 'png';
+    public const JPG = 'jpg';
+    public const PNG = 'png';
 }

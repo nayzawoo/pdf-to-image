@@ -7,7 +7,7 @@ PDF to image(jpg/png) using ([libvips](https://github.com/libvips/libvips), [php
 ## Requirements
 
 - *ext-vips* [(installation)](https://github.com/libvips/php-vips-ext#installing)
-- *php* >=7.0.11
+- *php* >=8.5
 
 ## Installation
 

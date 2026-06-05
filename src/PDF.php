@@ -1,43 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NayZawOo\PdfToImage;
 
-use Jcupitt\Vips;
 use NayZawOo\PdfToImage\Exceptions\FileNotFoundException;
 use NayZawOo\PdfToImage\Exceptions\InvalidOutputFormatException;
 
 class PDF
 {
-    /**
-     * @var array
-     */
-    private $sourcePath;
+    private string $sourcePath;
+    private array $sourceOptions;
+    private VipsAdapterInterface $vips;
 
-    private $sourceOptions;
-
-    /**
-     * Converter constructor.
-     *
-     * @param string $sourcePath
-     * @param $sourceOptions
-     */
-    public function __construct($sourcePath, $sourceOptions = [])
+    public function __construct(string $sourcePath, array $sourceOptions = [], ?VipsAdapterInterface $vips = null)
     {
         $this->sourcePath = $sourcePath;
         $this->sourceOptions = $sourceOptions;
+        $this->vips = $vips ?? new VipsAdapter();
     }
 
-    /**
-     * @param $path
-     * @param array $options
-     * @return null
-     * @throws \NayZawOo\PdfToImage\Exceptions\InvalidOutputFormatException
-     * @throws \NayZawOo\PdfToImage\Exceptions\FileNotFoundException
-     */
-    public function saveAsImage($path, $options = [])
+    public function saveAsImage(string $path, array $options = []): void
     {
         if (!file_exists($this->sourcePath)) {
-            throw new FileNotFoundException("No such file or directory ".$this->sourcePath);
+            throw new FileNotFoundException("No such file or directory {$this->sourcePath}");
         }
 
         $extension = Utils::getExtensionsFromPath($path);
@@ -45,22 +31,24 @@ class PDF
         $sourceOptions = $this->getSourceOptions($this->sourceOptions);
         $outputOptions = $this->getOutputOptions($options, $extension);
 
-        $pdf = Vips\Image::pdfload($this->sourcePath, $sourceOptions);
+        $pdf = $this->vips->pdfload($this->sourcePath, $sourceOptions);
 
         if ($extension === ImageFormat::JPG) {
             $pdf->jpegsave($path, $outputOptions);
 
-            return null;
-        } elseif ($extension === ImageFormat::PNG) {
-            $pdf->pngsave($path, $outputOptions);
-
-            return null;
+            return;
         }
 
-        throw new InvalidOutputFormatException("Invalid output image format: \"".$extension."\"");
+        if ($extension === ImageFormat::PNG) {
+            $pdf->pngsave($path, $outputOptions);
+
+            return;
+        }
+
+        throw new InvalidOutputFormatException("Invalid output image format: \"{$extension}\"");
     }
 
-    protected function getSourceOptions($options)
+    protected function getSourceOptions(array $options): array
     {
         $sourceOptions = $this->arrayOnly($options, [
             'page',
@@ -72,17 +60,17 @@ class PDF
         $sourceOptions['dpi'] = $sourceOptions['dpi'] ?? 300;
         $sourceOptions['n'] = $sourceOptions['n'] ?? 1;
 
-        if (isset($options['all_pages']) && $options['all_pages']) {
+        if (!empty($options['all_pages'])) {
             $sourceOptions['n'] = -1;
         }
 
         return $sourceOptions;
     }
 
-    protected function getOutputOptions($options, $extension)
+    protected function getOutputOptions(array $options, string $extension): array
     {
-        if ($extension == ImageFormat::JPG) {
-            $outputOptions = $this->arrayOnly($options, [
+        if ($extension === ImageFormat::JPG) {
+            return $this->arrayOnly($options, [
                 'Q',
                 'profile',
                 'optimize_coding',
@@ -94,24 +82,22 @@ class PDF
                 'optimize_scans',
                 'quant_table',
             ]);
-        } else {
-            $outputOptions = $this->arrayOnly($options, [
-                'compression', // compression level 0 - 9, Default 6
-                'interlace',
-                'profile',
-                'filter',
-                'palette',
-                'colours',
-                'Q',
-                'dither',
-            ]);
         }
 
-        return $outputOptions;
+        return $this->arrayOnly($options, [
+            'compression', // compression level 0 - 9, Default 6
+            'interlace',
+            'profile',
+            'filter',
+            'palette',
+            'colours',
+            'Q',
+            'dither',
+        ]);
     }
 
-    protected function arrayOnly($array, $keys)
+    protected function arrayOnly(array $array, array $keys): array
     {
-        return array_intersect_key($array, array_flip((array) $keys));
+        return array_intersect_key($array, array_flip($keys));
     }
 }
