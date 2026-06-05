@@ -33,7 +33,7 @@ class PDFTest extends TestCase
 
         $pdfImage->expects(self::once())
             ->method('pngsave')
-            ->with(self::equalTo(sys_get_temp_dir() . '/sample-output.png'), self::isType('array'));
+            ->with(self::equalTo(sys_get_temp_dir() . '/sample-output.png'), self::isArray());
 
         $vipsAdapter = $this->createMock(VipsAdapterInterface::class);
         $vipsAdapter->expects(self::once())
@@ -53,7 +53,7 @@ class PDFTest extends TestCase
 
         $pdfImage->expects(self::once())
             ->method('jpegsave')
-            ->with(self::equalTo(sys_get_temp_dir() . '/sample-output.jpg'), self::isType('array'));
+            ->with(self::equalTo(sys_get_temp_dir() . '/sample-output.jpg'), self::isArray());
 
         $vipsAdapter = $this->createMock(VipsAdapterInterface::class);
         $vipsAdapter->expects(self::once())

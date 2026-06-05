@@ -3,7 +3,10 @@
 .idea
 composer.lock
 /docs
-/tests/output
+/data/output
 *.swp
 .phpunit.result.cache
 /.php_cs.cache
+/.phpunit.cache/
+/test.php
+/output.png

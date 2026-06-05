@@ -9,6 +9,8 @@ use NayZawOo\PdfToImage\Exceptions\InvalidOutputFormatException;
 
 class PDF
 {
+    private const JPG = 'jpg';
+    private const PNG = 'png';
     private string $sourcePath;
     private array $sourceOptions;
     private VipsAdapterInterface $vips;
@@ -26,20 +28,20 @@ class PDF
             throw new FileNotFoundException("No such file or directory {$this->sourcePath}");
         }
 
-        $extension = Utils::getExtensionsFromPath($path);
+        $extension = $this->getExtensionsFromPath($path);
 
         $sourceOptions = $this->getSourceOptions($this->sourceOptions);
         $outputOptions = $this->getOutputOptions($options, $extension);
 
         $pdf = $this->vips->pdfload($this->sourcePath, $sourceOptions);
 
-        if ($extension === ImageFormat::JPG) {
+        if ($extension === self::JPG) {
             $pdf->jpegsave($path, $outputOptions);
 
             return;
         }
 
-        if ($extension === ImageFormat::PNG) {
+        if ($extension === self::PNG) {
             $pdf->pngsave($path, $outputOptions);
 
             return;
@@ -48,7 +50,7 @@ class PDF
         throw new InvalidOutputFormatException("Invalid output image format: \"{$extension}\"");
     }
 
-    protected function getSourceOptions(array $options): array
+    private function getSourceOptions(array $options): array
     {
         $sourceOptions = $this->arrayOnly($options, [
             'page',
@@ -67,9 +69,9 @@ class PDF
         return $sourceOptions;
     }
 
-    protected function getOutputOptions(array $options, string $extension): array
+    private function getOutputOptions(array $options, string $extension): array
     {
-        if ($extension === ImageFormat::JPG) {
+        if ($extension === self::JPG) {
             return $this->arrayOnly($options, [
                 'Q',
                 'profile',
@@ -96,8 +98,21 @@ class PDF
         ]);
     }
 
-    protected function arrayOnly(array $array, array $keys): array
+    private function arrayOnly(array $array, array $keys): array
     {
         return array_intersect_key($array, array_flip($keys));
+    }
+
+    private function getExtensionsFromPath(string $path): string
+    {
+        $outputExtension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+
+        switch ($outputExtension) {
+            case 'jpg':
+            case 'jpeg':
+                return self::JPG;
+            default:
+                return self::PNG;
+        }
     }
 }

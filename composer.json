@@ -1,30 +1,36 @@
 {
     "name": "nayzawoo/pdf-to-image",
-    "description": "Converter PDF to JPG/PNG using vips",
-    "type": "library",
-    "require": {
-        "php" : "^8.5",
-        "jcupitt/vips": "^2.4.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit" : "^12.5.12"
-    },
+    "description": "Convert PDF pages to JPG/PNG images using libvips",
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "NayZawOo\\PdfToImage\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "NayZawOo\\PdfToImage\\Tests\\": "tests"
-        }
-    },
+    "type": "library",
     "authors": [
         {
             "name": "Nay Zaw Oo",
             "email": "nayzawoo.me@gmail.com"
         }
     ],
-    "minimum-stability": "dev"
+    "require": {
+        "php": "^8.5",
+        "ext-ffi": "*",
+        "jcupitt/vips": "^2.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "NayZawOo\\PdfToImage\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NayZawOo\\PdfToImage\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {}
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
